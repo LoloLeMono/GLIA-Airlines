@@ -5,14 +5,13 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import java.lang.reflect.Field;
 
-// /Users/lololemono/.m2/repository/org/choco-solver/choco-solver/4.0.5
 
-public class App 
-{
+public class App {
 	
 	private static Instance inst = Instance.inst1;
-	private static long timeout = 300000; // five minutes
+	private static long timeout = 60000; // five minutes
 	private static boolean allSolutions;
 
 	
@@ -32,10 +31,21 @@ public class App
 		for (Option opt : line.getOptions()) {
 			checkOption(line, opt.getLongOpt());
 		}
-
-		new GLIAAirlines().solve(inst, timeout, true);
+		
+		System.out.println("\n------------------ GLIA Airlines ------------------ \n");
+		
+		GLIAAirlines avion = new GLIAAirlines();
+		
+		System.out.println("Question n°1 et 2 - Backtrack : \n");
+		avion.divider(inst.nb_dividers, inst.capacity, inst.exits);
+		System.out.println();
+		
+		System.out.println("\nQuestion n°5");
+		avion.solve(inst, timeout, allSolutions);
+		System.out.println();
 	}
 	
+
 	
 	// Add options here
 	private static Options configParameters() {
